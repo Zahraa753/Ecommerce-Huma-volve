@@ -5,7 +5,8 @@ import '../theme.dart';
 class PrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
-  bool isLoading;
+  final bool isLoading;
+
   PrimaryButton({
     super.key,
     required this.text,
@@ -33,7 +34,7 @@ class PrimaryButton extends StatelessWidget {
         ),
       ),
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.white,

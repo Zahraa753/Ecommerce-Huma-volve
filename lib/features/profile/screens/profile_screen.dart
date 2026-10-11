@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/dummy_data.dart';
 import '../../../core/theme.dart';
 import '../widgets/profile_menu_item.dart';
+import '../../auth/data/auth_repository.dart';
 import '../../auth/login/screens/login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -98,13 +99,20 @@ class ProfileScreen extends StatelessWidget {
                     icon: Icons.logout,
                     title: 'Logout',
                     isDestructive: true,
-                    onTap: () {
+                    onTap: () async {
+                      await AuthRepository().logout();
+                      if (!context.mounted) return;
                       Navigator.pushReplacement(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (context, animation, secondaryAnimation) => const LoginScreen(),
-                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                            return FadeTransition(opacity: animation, child: child);
+                          pageBuilder: (context, animation, secondaryAnimation) =>
+                              const LoginScreen(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
                           },
                         ),
                       );
