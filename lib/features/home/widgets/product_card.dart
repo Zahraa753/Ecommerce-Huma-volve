@@ -1,5 +1,7 @@
+import 'package:ecommerce_app_huma_volve/core/dummy_data.dart';
+import 'package:ecommerce_app_huma_volve/features/home/models/product_model.dart';
 import 'package:flutter/material.dart';
-import '../../../core/dummy_data.dart';
+
 import '../../../core/theme.dart';
 import '../../details/screens/product_details_screen.dart';
 
@@ -16,11 +18,12 @@ class ProductCard extends StatelessWidget {
           context,
           PageRouteBuilder(
             transitionDuration: const Duration(milliseconds: 500),
-            pageBuilder: (context, animation, secondaryAnimation) => 
+            pageBuilder: (context, animation, secondaryAnimation) =>
                 ProductDetailsScreen(product: product),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              return FadeTransition(opacity: animation, child: child);
-            },
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
           ),
         );
       },
@@ -47,7 +50,9 @@ class ProductCard extends StatelessWidget {
                   Hero(
                     tag: 'product-${product.id}',
                     child: ClipRRect(
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(24),
+                      ),
                       child: Image.network(
                         product.imageUrl,
                         fit: BoxFit.cover,
@@ -78,7 +83,7 @@ class ProductCard extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(12.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -87,8 +92,8 @@ class ProductCard extends StatelessWidget {
                       product.name,
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        height: 1.2,
+                        fontSize: 14,
+                        height: 1,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
