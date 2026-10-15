@@ -3,6 +3,7 @@ import 'package:ecommerce_app_huma_volve/features/home/cubit/home_state.dart';
 import 'package:ecommerce_app_huma_volve/features/home/service/home_service.dart';
 
 class HomeCubit extends Cubit<HomeState> {
+  
   HomeCubit() : super(HomeInitial());
   HomeService homeService = HomeService();
 
