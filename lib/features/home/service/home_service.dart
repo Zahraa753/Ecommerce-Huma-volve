@@ -1,48 +1,39 @@
-import 'package:dio/dio.dart';
-import 'package:ecommerce_app_huma_volve/core/constants/api_constants.dart';
-import 'package:ecommerce_app_huma_volve/core/network/dio_client.dart';
-import 'package:ecommerce_app_huma_volve/features/home/models/category_model.dart';
-import 'package:ecommerce_app_huma_volve/features/home/models/product_model.dart';
+// import 'package:dio/dio.dart';
+// import 'package:ecommerce_app_huma_volve/core/constants/api_constants.dart';
+// import 'package:ecommerce_app_huma_volve/core/network/dio_client.dart';
+// import 'package:ecommerce_app_huma_volve/features/home/data/models/home_category_model.dart';
+// import 'package:ecommerce_app_huma_volve/features/home/data/models/home_product_model.dart';
 
+// class HomeService {
+//   HomeService({Dio? dio}) : _dio = dio ?? DioClient.instance;
 
+//   final Dio _dio;
 
-  
-class HomeService {
-  HomeService({Dio? dio}) : _dio = dio ?? DioClient.instance;
+//   Future<List<HomeCategoryModel>> getCategories() async {
+//     final response = await _dio.get(ApiConstants.categoriesPath);
 
-  final Dio _dio;
+//     final List<dynamic> jsonData = response.data as List<dynamic>;
 
-  Future<List<CategoryModel>> getCategories() async {
-    final response = await _dio.get(ApiConstants.categoriesPath);
+//     return jsonData
+//         .map((e) => HomeCategoryModel.fromJson(e as Map<String, dynamic>))
+//         .toList();
+//   }
 
-    final List<dynamic> jsonData = response.data as List<dynamic>;
+//   Future<List<HomeProductModel>> getProducts(int? categoryId) async {
+//     final Response<dynamic> response;
 
-    return jsonData
-        .map((e) => CategoryModel.fromJson(
-              e as Map<String, dynamic>,
-            ))
-        .toList();
-  }
+//     if (categoryId != null) {
+//       response = await _dio.get(
+//         '${ApiConstants.categoriesPath}/$categoryId${ApiConstants.productsPath}',
+//       );
+//     } else {
+//       response = await _dio.get(ApiConstants.productsPath);
+//     }
 
-  Future<List<ProductModel>> getProducts(int? categoryId) async {
-    final Response<dynamic> response;
+//     final List<dynamic> jsonData = response.data as List<dynamic>;
 
-    if (categoryId != null) {
-      response = await _dio.get(
-        '${ApiConstants.categoriesPath}/$categoryId${ApiConstants.productsPath}',
-      );
-    } else {
-      response = await _dio.get(ApiConstants.productsPath);
-    }
-
-    final List<dynamic> jsonData = response.data as List<dynamic>;
-
-    return jsonData
-        .map((e) => ProductModel.fromJson(
-              e as Map<String, dynamic>,
-            ))
-        .toList();
-  
-  }
-
-}
+//     return jsonData
+//         .map((e) => HomeProductModel.fromJson(e as Map<String, dynamic>))
+//         .toList();
+//   }
+// }

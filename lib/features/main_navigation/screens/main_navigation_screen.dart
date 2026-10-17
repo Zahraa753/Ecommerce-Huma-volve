@@ -1,9 +1,14 @@
-import 'package:ecommerce_app_huma_volve/features/home/cubit/home_cubit.dart';
+import 'package:ecommerce_app_huma_volve/core/network/dio_client.dart';
+import 'package:ecommerce_app_huma_volve/features/home/data/data_source/home_remote_data_source_imp.dart';
+import 'package:ecommerce_app_huma_volve/features/home/data/repository/home_repsitory_imp.dart';
+import 'package:ecommerce_app_huma_volve/features/home/domain/use_cases/get_category_use_case.dart';
+import 'package:ecommerce_app_huma_volve/features/home/domain/use_cases/get_product_use_case.dart';
+import 'package:ecommerce_app_huma_volve/features/home/presentation/view_model/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/theme.dart';
-import '../../home/screens/home_screen.dart';
+import '../../home/presentation/view/home_screen.dart';
 import '../../cart/screens/cart_screen.dart';
 import '../../profile/screens/profile_screen.dart';
 
@@ -15,13 +20,36 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _currentIndex = 0;
+  late final HomeRemoteDataSourceImp homeRemoteDataSource;
+  late final HomeRepsitoryImp homeRepository;
+  late final GetCategoryUseCase getCategoryUseCase;
+  late final GetProductUseCase getProductUseCase;
+  late final HomeCubit homeCubit;
+  late final List<Widget> _screens;
 
-  final List<Widget> _screens = [
-    BlocProvider(create: (context) => HomeCubit(), child: const HomeScreen()),
-    const CartScreen(),
-    const ProfileScreen(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+
+    homeRemoteDataSource = HomeRemoteDataSourceImp(DioClient.instance);
+    homeRepository = HomeRepsitoryImp(homeRemoteDataSource);
+    getCategoryUseCase = GetCategoryUseCase(homeRepository: homeRepository);
+    getProductUseCase = GetProductUseCase(homeRepository: homeRepository);
+    homeCubit = HomeCubit(getCategoryUseCase, getProductUseCase);
+    _screens = [
+      BlocProvider.value(value: homeCubit, child: const HomeScreen()),
+      const CartScreen(),
+      const ProfileScreen(),
+    ];
+  }
+
+  @override
+  void dispose() {
+    homeCubit.close();
+    super.dispose();
+  }
+
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
